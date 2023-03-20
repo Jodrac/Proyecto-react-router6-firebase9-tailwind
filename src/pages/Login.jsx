@@ -1,20 +1,44 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserProvider";
 
 const Login = () => {
-  const { user, setUser } = useContext(UserContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { loginUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const handleClickLogin = () => {
-    setUser(true);
-    navigate("/");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Procesando form: ", email, password);
+
+    try {
+      await loginUser(email, password);
+      console.log("Usuario activo");
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <>
       <h1>Login</h1>
-      <h2>{user ? "Online" : "Offline"}</h2>
-      <button onClick={handleClickLogin}>Acceder</button>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="Ingrese email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Ingrese password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Acceder</button>
+      </form>
     </>
   );
 };
