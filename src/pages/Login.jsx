@@ -16,6 +16,7 @@ const Login = () => {
     try {
       await loginUser(email, password);
       console.log("Usuario activo");
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
