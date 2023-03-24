@@ -1,15 +1,30 @@
 export const erroresFirebase = (errorCode) => {
   switch (errorCode) {
     case "auth/email-already-in-use":
-      return "Usuario ya registrado";
+      return {
+        code: "email",
+        message: "Usuario ya registrado",
+      };
     case "auth/invalid-email":
-      return "Formato email no valido";
+      return {
+        code: "email",
+        message: "Formato email no valido",
+      };
     case "auth/user-not-found":
-      return "Usuario no registrado";
+      return {
+        code: "email",
+        message: "Usuario no registrado",
+      };
     case "auth/wrong-password":
-      return "Contraseña incorrecta";
+      return {
+        code: "password",
+        message: "Contraseña incorrecta",
+      };
     default:
-      return "Ha ocurrido un error en el servidor";
+      return {
+        code: "email",
+        message: "Ocurrio un error en el servidor",
+      };
   }
 };
 // Para añadir más errores https://firebase.google.com/docs/auth/admin/errors?hl=es-419
