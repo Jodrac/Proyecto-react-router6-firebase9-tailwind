@@ -9,6 +9,7 @@ import {
   setDoc,
   deleteDoc,
   updateDoc,
+  getDoc,
 } from "firebase/firestore";
 import { nanoid } from "nanoid";
 
@@ -18,7 +19,6 @@ export const useFirestore = () => {
   const [loading, setLoading] = useState({});
 
   const getData = async () => {
-    console.log(auth.currentUser);
     try {
       setLoading((prev) => ({ ...prev, getData: true }));
       const dataRef = collection(db, "urls");
@@ -86,6 +86,17 @@ export const useFirestore = () => {
       setLoading((prev) => ({ ...prev, updateData: false }));
     }
   };
+
+  const searchData = async (nanoid) => {
+    try {
+      const docRef = doc(db, "urls", nanoid);
+      const docSnap = await getDoc(docRef);
+      return docSnap;
+    } catch (error) {
+      console.log(error);
+      setError(error.message);
+    }
+  };
   return {
     data,
     error,
@@ -94,5 +105,6 @@ export const useFirestore = () => {
     addData,
     deleteData,
     updateData,
+    searchData,
   };
 };
